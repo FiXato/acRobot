@@ -17,8 +17,7 @@ acRobot is written to generate its own config file when it can't find an
 existing one.
 
 * Install Cinch:
-	(optional): `git clone http://github.com/cinchrb/cinch.git && cd cinch && gem build cinch.gemspec`
-  (required): `gem install cinch`
+  `gem install cinch` (or check https://github.com/cinchrb/cinch#)
 * Clone the git repo:
   `git clone git://github.com/FiXato/acRobot.git && cd acRobot`
 * Run the bot:
@@ -44,8 +43,8 @@ Note that you can also pass an alternative config filename:
   letters or 3-5 random 'easy' letters)
 * Game mode can be specified at start of the game, or a random game mode can 
   be chosen
-* Keyword-based acronym submission (!submit <acro here>) (channel and query)
-* Keyword-based acronym voting (!vote <acronumber>) (channel and query)
+* Keyword-based acronym submission (`!submit <acro here>`) (channel and query)
+* Keyword-based acronym voting (`!vote <acronumber>`) (channel and query)
 * Context-based acronym submission and voting via PRIVMSG to the bot
 * Acronym theme suggestions
 * Score list
@@ -95,13 +94,15 @@ See the TODO.markdown file.
 
 Thanks go out to:
 
-* m0d: for running the TMAcro bot several years on Esper.net
-* The Chat4All and Esper IRC Networks, for offering a place where I can run 
-  and test my acRo bot.
+* m0d of www.nightbacon.com, for running the TMAcro bot several years on Esper.net
+* The Chat4All (www.chat4all.org) and Esper (www.esper.net) IRC Networks, 
+  for offering a place where I can run and test my acRo bot.
 * The Cinch developers, for creating an easy to use IRC library.
 * Flashcode, for developing the awesome WeeChat IRC client: www.weechat.org
 
 ## Copyright
 ******************************************************************************
 
-Copyright (c) 2011 Filip H.F. "FiXato" Slagter. See LICENSE for details.
+Copyright (c) 2011 Filip H.F. "FiXato" Slagter.
+
+See LICENSE for details.

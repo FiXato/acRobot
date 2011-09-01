@@ -67,8 +67,9 @@ NETWORKS.each do |network,options|
 end
 
 @bots.each do |bot|
-  Thread.new {bot.start}
+  Thread.new {bot.start;sleep 2}
 end
 
 while true do
+  sleep 60
 end

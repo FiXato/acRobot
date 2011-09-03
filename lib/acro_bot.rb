@@ -29,6 +29,7 @@ class AcroBot
   }
 
   SCORE_NEEDED = 10
+  MIN_SUBMISSIONS = 1
 
   def initialize(*args)
     super
@@ -141,7 +142,7 @@ class AcroBot
       end_game(m)
       return false
     end
-    if number_of_submissions == 1
+    if number_of_submissions == MIN_SUBMISSIONS
       reply_with_template(m,:game_insufficient_acros_received)
       start_round(m)
       return false
@@ -173,7 +174,10 @@ class AcroBot
     #Get this round's winners
     winners = @submissions.group_by{|k,v|v[:votes]}.max
     winning_nicks = winners.last.map{|user|user.first}
-    m.reply "With #{winners.first} votes, #{winning_nicks.join(" and ")} won this round."
+    m.reply text_templates(:game_round_winners, {
+      :winning_votes_count => winners.first,
+      :winning_voters => winning_nicks.join(" and ")
+    })
 
     #make sure that first all points are given
     voted_for = []
@@ -181,7 +185,7 @@ class AcroBot
       voted_for << submissions[user][:voters]
       #Only voters can score
       unless votes.has_key?(user)
-        m.reply "#{user} didn't vote, so isn't getting any points"
+        m.reply text_templates(:game_no_points_awarded_to_winner, {:nick => user})
         next
       end
       @scores[user] += 1
@@ -208,10 +212,13 @@ class AcroBot
       return false
     end
     @stage=nil
-    m.reply "Thank you for playing Acro."
+    m.reply text_templates(:game_stopped_thank_for_playing)
     if @scores.size > 0
       winners = @scores.group_by{|k,v|v}.max
-      m.reply "#{winners.last.map{|k,v|k}.join(" and ")} won the game with #{winners.first} points"
+      m.reply text_templates(:game_stopped_results, {
+        :winning_nicks => winners.last.map{|k,v|k}.join(" and "), 
+        :winning_points => winners.first
+      })
     end
     stop_thread
   end
@@ -453,8 +460,16 @@ class AcroBot
       submissions.map do |nick, submission|
         "#{nick}'s acro '#{submission[:acro]}' got #{submission[:votes]} vote#{submission[:votes] == 1 ? '' : 's'}: #{submission[:voters].join(", ")}"
       end.join("\n")
+    when :game_round_winners
+      "With #{args[:winning_votes_count]} votes, #{args[:winning_voters]} won this round."
     when :game_first_voter_earns_point
       "#{args[:nick]} was the first to vote for a winning submission and earns a point as well."
+    when :game_no_points_awarded_to_winner
+      "#{args[:nick]} didn't vote, so isn't getting any points"
+    when :game_stopped_thanks_for_playing
+      "This game has ended. Thank you for playing Acro."
+    when :game_stopped_results
+      "#{args[:winning_nicks]} won the game with #{args[:winning_points]} points"
     when :help
       <<-EOS
         In the game of Acro you have to come up with words for each letter of the given acronym. It does not need to be an existing acronym, so you can be creative!

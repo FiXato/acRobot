@@ -10,6 +10,9 @@ There are already plenty of acro IRC bots and scripts around, though I felt
 like writing my own in Ruby, using the Cinch library, since I feel it's easier
 to add features to code I've written myself, in my favourite language.
 
+## Discontinuation notice
+This bot is no longer in use nor maintained, and will be archived.
+
 ## Configuration instructions
 ******************************************************************************
 
